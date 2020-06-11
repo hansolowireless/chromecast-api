@@ -377,7 +377,7 @@ class MediaStreamHandler : EventChannel.StreamHandler {
     }
 }
 
-internal class DRMCustomChannel : MessageReceivedCallback {
+class DRMCustomChannel : MessageReceivedCallback {
     val namespace: String
         get() = "\"urn:x-cast:com.google.devrel.custom"
 
