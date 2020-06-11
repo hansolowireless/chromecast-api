@@ -19,6 +19,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import java.io.IOException
 
 
 var context: Context? = null
@@ -283,7 +284,7 @@ class MediaStreamHandler : EventChannel.StreamHandler {
                     myCastSession.setMessageReceivedCallbacks(
                             myCustomChannel.namespace,
                             myCustomChannel);
-                } catch (IOException e) {
+                } catch (e: IOException) {
 //                    Log.e(TAG, "Exception while creating channel", e);
                 }
 
@@ -386,7 +387,7 @@ class DRMCustomChannel : MessageReceivedCallback {
 
     override fun onMessageReceived(castDevice: CastDevice, namespace: String,
                                    message: String) {
-        Log.d(TAG, "onMessageReceived: $message")
+//        Log.d(TAG, "onMessageReceived: $message")
     }
 }
 
