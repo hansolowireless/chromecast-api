@@ -376,7 +376,7 @@ class DRMCustomChannel implements Cast.MessageReceivedCallback {
 }
 
 private void sendMessage(String message) {
- if (mHelloWorldChannel != null) {
+ if (mDRMCustomChannel != null) {
   try {
     myCastSession.sendMessage(mDRMCustomChannel.getNamespace(), message)
     .setResultCallback(
