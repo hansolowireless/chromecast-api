@@ -261,6 +261,15 @@ class MediaStreamHandler : EventChannel.StreamHandler {
         if (castContext?.sessionManager?.currentCastSession != null) {
           remoteMediaClient = castContext?.sessionManager?.currentCastSession!!.remoteMediaClient
           remoteMediaClient?.registerCallback(callback)
+
+          try {
+            myCastSession.setMessageReceivedCallbacks(
+            mDRMCustomChannel.getNamespace(),
+            mDRMCustomChannel);
+          } catch (IOException e) {
+            Log.e(TAG, "Exception while creating channel", e);
+          }
+          
         }
       }
 
@@ -364,4 +373,23 @@ class DRMCustomChannel implements Cast.MessageReceivedCallback {
         String message) {
     Log.d(TAG, "onMessageReceived: " + message);
   }
+}
+
+private void sendMessage(String message) {
+ if (mHelloWorldChannel != null) {
+  try {
+    myCastSession.sendMessage(mDRMCustomChannel.getNamespace(), message)
+    .setResultCallback(
+      new ResultCallback<Status>() {
+        @Override
+        public void onResult(Status result) {
+          if (!result.isSuccess()) {
+            Log.e(TAG, "Sending message failed");
+          }
+        }
+      });
+  } catch (Exception e) {
+    Log.e(TAG, "Exception while sending message", e);
+  }
+ }
 }
