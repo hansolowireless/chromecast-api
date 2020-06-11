@@ -203,17 +203,20 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
 
         if (myCustomChannel != null) {
             try {
-                myCastSession.sendMessage(myCustomChannel.namespace, message)
+/*                myCastSession.sendMessage(myCustomChannel.namespace, message)
                         .setResultCallback(
                                 object : ResultCallback<Status?>() {
                                     fun onResult(result: Status) {
                                         if (!result.isSuccess()) {
-                                            Log.e(TAG, "Sending message failed")
+//                                            Log.e(TAG, "Sending message failed")
                                         }
                                     }
-                                })
+                                })*/
+
+                myCastSession.sendMessage(myCustomChannel.namespace, message).setResultCallback {  }
+
             } catch (e: java.lang.Exception) {
-                Log.e(TAG, "Exception while sending message", e)
+//                Log.e(TAG, "Exception while sending message", e)
             }
         }
     }
@@ -281,7 +284,7 @@ class MediaStreamHandler : EventChannel.StreamHandler {
                             myCustomChannel.namespace,
                             myCustomChannel);
                 } catch (IOException e) {
-                    Log.e(TAG, "Exception while creating channel", e);
+//                    Log.e(TAG, "Exception while creating channel", e);
                 }
 
             }
