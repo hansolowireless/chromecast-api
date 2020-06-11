@@ -353,3 +353,15 @@ class MediaStreamHandler : EventChannel.StreamHandler {
       // eventSink?.success(remoteMediaClient?.mediaInfo?.metadata)
     }
 }
+
+
+class DRMCustomChannel implements Cast.MessageReceivedCallback {
+  public String getNamespace() {
+    return "urn:x-cast:com.google.devrel.custom";
+  }
+  @Override
+  public void onMessageReceived(CastDevice castDevice, String namespace,
+        String message) {
+    Log.d(TAG, "onMessageReceived: " + message);
+  }
+}
