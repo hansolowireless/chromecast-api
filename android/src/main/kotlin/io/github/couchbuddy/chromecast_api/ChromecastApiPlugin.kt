@@ -383,7 +383,7 @@ class MediaStreamHandler : EventChannel.StreamHandler {
 
 class DRMCustomChannel : MessageReceivedCallback {
     val namespace: String
-        get() = "\"urn:x-cast:com.google.devrel.custom"
+        get() = "urn:x-cast:com.google.devrel.custom"
 
     override fun onMessageReceived(castDevice: CastDevice, namespace: String,
                                    message: String) {
