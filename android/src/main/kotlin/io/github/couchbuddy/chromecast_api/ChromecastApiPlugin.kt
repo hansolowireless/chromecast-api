@@ -158,6 +158,7 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
                             .build()
             )
         }
+        print("LICENSEURLDEBUG" + call.argument("licenseURL"))
 
         if (call.argument("licenseURL") as? String != null) {
             print("Me meto aquíiiiiiiiii")
