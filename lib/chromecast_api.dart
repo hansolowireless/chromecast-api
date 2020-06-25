@@ -66,7 +66,7 @@ class MediaInfo {
         : [];
     this.title = data['title'];
     this.url = Uri.parse(data['url']);
-    this.licenseURL = Uri.parse(data['licenseURL']);
+    // this.licenseURL = Uri.parse(data['licenseURL']);
     this.type = MediaMetadataType.values[data['type'] as int];
   }
 
