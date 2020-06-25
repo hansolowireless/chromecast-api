@@ -159,6 +159,10 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
             )
         }
 
+        val sentLicenseURL : String = call.argument("licenseURL");
+        val drmMessage : String = "{license : $sentLicenseURL}"
+        sendMessage(drmMessage)
+
         val mediaInfo: MediaInfo = MediaInfo.Builder(call.argument("url"))
                 .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(movieMetadata)
