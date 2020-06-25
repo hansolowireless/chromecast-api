@@ -181,6 +181,7 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
                 .setMediaTracks(tracks)
                     .setCustomData(JSONObject("{\"license\" : \"" + call.argument("licenseURL") + "\"}"))
                     .setCustomData(JSONObject("{\"custom\" : \"" + call.argument("customData") + "\"}"))
+                    .setContentType("application/dash+xml")
                     .build()
 
         val remoteMediaClient: RemoteMediaClient = castContext?.sessionManager?.currentCastSession!!.remoteMediaClient
