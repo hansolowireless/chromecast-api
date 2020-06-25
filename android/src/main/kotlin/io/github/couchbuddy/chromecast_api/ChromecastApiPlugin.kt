@@ -160,6 +160,7 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
         }
 
         if (call.argument("licenseURL") as? String != null) {
+            print("Me meto aquíiiiiiiiii")
             val sentLicenseURL : String = call.argument("licenseURL")!!
             val drmMessage = "{license : $sentLicenseURL}"
             sendMessage(drmMessage)
