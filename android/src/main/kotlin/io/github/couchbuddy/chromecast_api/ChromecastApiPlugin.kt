@@ -19,6 +19,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import org.json.JSONObject
 import java.io.IOException
 
 
@@ -178,7 +179,9 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
                 .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(movieMetadata)
                 .setMediaTracks(tracks)
-                .build()
+                    .setCustomData(JSONObject("{\"license\" : \"" + call.argument("licenseURL") + "\"}"))
+                    .setCustomData(JSONObject("{\"custom\" : \"" + call.argument("customData") + "\"}"))
+                    .build()
 
         val remoteMediaClient: RemoteMediaClient = castContext?.sessionManager?.currentCastSession!!.remoteMediaClient
         val mediaRequest: MediaLoadRequestData = MediaLoadRequestData.Builder()
