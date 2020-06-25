@@ -46,6 +46,7 @@ class MediaInfo {
   String title;
   Uri url;
   Uri licenseURL;
+  String customData;
 
   MediaMetadataType type;
 
@@ -66,7 +67,6 @@ class MediaInfo {
         : [];
     this.title = data['title'];
     this.url = Uri.parse(data['url']);
-    // this.licenseURL = Uri.parse(data['licenseURL']);
     this.type = MediaMetadataType.values[data['type'] as int];
   }
 
@@ -80,6 +80,7 @@ class MediaInfo {
         'title': this.title,
         'url': this.url.toString(),
         'licenseURL': this.licenseURL.toString(),
+        'customData': this.customData,
         'type': this.type.index
       };
 }
