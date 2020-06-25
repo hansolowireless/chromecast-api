@@ -163,12 +163,18 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
         if (call.argument("licenseURL") as? String != null) {
             print("Me meto aquíiiiiiiiii")
             val sentLicenseURL : String = call.argument("licenseURL")!!
-            val drmMessage = "{license : $sentLicenseURL}"
+            val drmMessage = "{\"license\" : \"$sentLicenseURL\"}"
             sendMessage(drmMessage)
         };
 
+        if (call.argument("customData") as? String != null) {
+            val sentCustomData : String = call.argument("customData")!!
+            val drmMessage = "{\"custom\" : \"$sentCustomData\"}"
+            sendMessage(drmMessage)
+        }
 
-        val mediaInfo: MediaInfo = MediaInfo.Builder(call.argument("url"))
+
+            val mediaInfo: MediaInfo = MediaInfo.Builder(call.argument("url"))
                 .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(movieMetadata)
                 .setMediaTracks(tracks)
