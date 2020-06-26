@@ -2,6 +2,7 @@ package io.github.couchbuddy.chromecast_api
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.mediarouter.app.MediaRouteChooserDialog
 import androidx.mediarouter.app.MediaRouteControllerDialog
@@ -26,7 +27,7 @@ import java.io.IOException
 var context: Context? = null
 var castStreamHandler: CastStreamHandler? = null
 var mediaStreamHandler: MediaStreamHandler? = null
-val myCustomChannel = DRMCustomChannel()
+val myCustomChannel : DRMCustomChannel = DRMCustomChannel()
 
 /** ChromecastApiPlugin */
 class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
@@ -162,16 +163,17 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
         print("LICENSEURLDEBUG" + call.argument("licenseURL"))
 
         if (call.argument("licenseURL") as? String != null) {
-            print("Me meto aquíiiiiiiiii")
             val sentLicenseURL : String = call.argument("licenseURL")!!
-            val drmMessage = "{\"license\" : \"$sentLicenseURL\"}"
-            sendMessage(drmMessage)
+//            val drmMessage = "{\"license\" : \"$sentLicenseURL\"}"
+            val drmMessageJSON = JSONObject("{\"license\" : \"$sentLicenseURL\"}")
+            sendMessage(drmMessageJSON.toString())
         };
 
         if (call.argument("customData") as? String != null) {
             val sentCustomData : String = call.argument("customData")!!
-            val drmMessage = "{\"custom\" : \"$sentCustomData\"}"
-            sendMessage(drmMessage)
+//            val drmMessage = "{\"custom\" : \"$sentCustomData\"}"
+            val customDataMessageJSON = JSONObject("{\"custom\" : \"$sentCustomData\"}")
+            sendMessage(customDataMessageJSON.toString())
         }
 
 
@@ -179,8 +181,9 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
                 .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(movieMetadata)
                 .setMediaTracks(tracks)
-                    .setCustomData(JSONObject("{\"license\" : \"" + call.argument("licenseURL") + "\"}"))
-                    .setCustomData(JSONObject("{\"custom\" : \"" + call.argument("customData") + "\"}"))
+/*                    .setCustomData(JSONObject("{\"license\" : \"" + call.argument("licenseURL") + "\"}"))
+                    .setCustomData(JSONObject("{\"custom\" : \"" + call.argument("customData") + "\"}"))*/
+                    .setCustomData(JSONObject("{\"license\" : \"" + call.argument("licenseURL") + "\", \"custom\" : \"" + call.argument("customData") + "\"}"))
                     .setContentType("application/dash+xml")
                     .build()
 
@@ -407,6 +410,7 @@ class DRMCustomChannel : MessageReceivedCallback {
     override fun onMessageReceived(castDevice: CastDevice, namespace: String,
                                    message: String) {
 //        Log.d(TAG, "onMessageReceived: $message")
+        Log.d("WOW", "onMessageReceived: $message")
     }
 }
 
