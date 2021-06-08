@@ -1,6 +1,8 @@
 package io.github.couchbuddy.chromecast_api
 
+import android.app.PendingIntent.getActivity
 import android.content.Context
+import android.content.pm.PackageManager.FEATURE_LEANBACK
 import android.net.Uri
 import android.util.Log
 import androidx.annotation.NonNull
@@ -34,18 +36,22 @@ class ChromecastApiPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
 
-        val channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "chromecast_api")
-        channel.setMethodCallHandler(ChromecastApiPlugin());
+        val isAndroidTV : Boolean = context!!.packageManager.hasSystemFeature(FEATURE_LEANBACK)
 
-        castStreamHandler = CastStreamHandler()
-        mediaStreamHandler = MediaStreamHandler()
+        if (!isAndroidTV) {
+            val channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "chromecast_api")
+            channel.setMethodCallHandler(ChromecastApiPlugin());
 
-        EventChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "cast_state_event").apply {
-            setStreamHandler(castStreamHandler)
-        }
+            castStreamHandler = CastStreamHandler()
+            mediaStreamHandler = MediaStreamHandler()
 
-        EventChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "media_state_event").apply {
-            setStreamHandler(mediaStreamHandler)
+            EventChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "cast_state_event").apply {
+                setStreamHandler(castStreamHandler)
+            }
+
+            EventChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "media_state_event").apply {
+                setStreamHandler(mediaStreamHandler)
+            }
         }
     }
 
